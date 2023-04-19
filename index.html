@@ -1,0 +1,134 @@
+<html>
+	<head>
+
+		<style>
+			.pressButton {
+			  background-color: yellow;
+			}
+
+		</style>
+		
+	</head>
+	<body>
+		
+		<h1 style="font-family: Beatrice; font-weight: 200; font-size: 36px; margin: 0 0 24 0;">RE Video Colour Tests 2</h1>
+
+		<!-- INTERFACE -->
+		
+		<div style="float: left; clear: left; margin: 24 0 24 0; ">
+			<button class="process">Media Encoder</button>
+			<button class="process">FFMPEG</button>
+			<button class="process">Davinci Resolve</button>
+		</div>
+
+		<div style="float: right; margin: 24 0 24 0; ">
+			<button class="timeButton">Blacks</button>
+			<button class="timeButton">Whites</button>
+			<button class="timeButton">Colour 1</button>
+			<button class="timeButton">Colour 2</button>
+			<button class="timeButton">Wise</button>
+			<button class="timeButton">Monzo</button>
+			<button class="timeButton">ACES 1</button>
+			<button class="timeButton">ACES 2</button>
+		</div>
+
+		<p id="videoName" style="font-family: Beatrice; font-weight: 400; font-size: 12px; margin: 24 0 6 0; clear: left">Media Encoder</p>
+
+
+		<!-- VIDEOS -->
+
+		<div>
+			<video class="vid" muted="" loop="" playsinline="" data-src="https://raggededge.com/wp-content/uploads/2023/04/RE-Video-Colour-Tests-v1_C1_AME-sRGB.mp4" data-type="video/mp4">
+						<source src="https://raggededge.com/wp-content/uploads/2023/04/RE-Video-Colour-Tests-v1_C1_AME-sRGB.mp4" type="video/mp4">
+			</video>
+
+			<video class="vid" muted="" loop="" playsinline="" data-src="https://raggededge.com/wp-content/uploads/2023/04/RE-Video-Colour-Tests-v1_C1_ffmpeg-Rec709-A.mp4" data-type="video/mp4">
+						<source src="https://raggededge.com/wp-content/uploads/2023/04/RE-Video-Colour-Tests-v1_C1_ffmpeg-Rec709-A.mp4" type="video/mp4">
+			</video>
+
+			<video class="vid" muted="" loop="" playsinline="" data-src="https://raggededge.com/wp-content/uploads/2023/04/RE-Video-Colour-Tests-v1_C1_DR-Rec709-A.mp4" data-type="video/mp4">
+						<source src="https://raggededge.com/wp-content/uploads/2023/04/RE-Video-Colour-Tests-v1_C1_DR-Rec709-A.mp4" type="video/mp4">
+			</video>
+		</div>
+		
+		
+
+	</body>
+	<script type="text/javascript">
+
+		function SetButtonStyle(buttonsList, buttonIndex) {
+
+			//Change button style
+			for (var n = 0; n < buttonsList.length; n++) {
+				if(n == buttonIndex){
+					buttonsList[n].classList.add('pressButton');
+				} else {
+					buttonsList[n].classList.remove('pressButton');
+				}
+			}
+
+		}
+
+
+		function SetVideoTime(videoElements, processIndex) {
+			for (var n = 0; n < videoElements.length + 1; n++) {
+				var myVid = videoElements[n];
+				myVid.pause();
+				myVid.currentTime = processIndex + 0.5;
+			}
+		}
+
+		function SetVideoVisibility(videoElements, processIndex) {
+
+			for (var n = 0; n < videoElements.length; n++) {
+				if(n != processIndex) {
+					videoElements[n].style.display = "none";
+				} else {
+					videoElements[n].style.display = "inline";
+				}
+			}
+
+		}
+
+
+		//Get videos
+		myVids = document.getElementsByClassName("vid");
+		frameButtons = document.getElementsByClassName("timeButton");
+		processButtons = document.getElementsByClassName("process");
+
+		
+		//Set video time on click		
+		for (var n = 0; n < frameButtons.length; n++) {
+			
+			(function(index) {
+				frameButtons[index].addEventListener('click', function() {
+
+					SetButtonStyle(frameButtons, index);
+					SetVideoTime(myVids, index);
+
+				})				
+			})(n);
+
+		}
+
+
+		//Set video visibility on click
+		for (var i = 0; i < processButtons.length; i++) {
+
+			(function(index) {
+				processButtons[index].addEventListener('click', function() {
+
+					SetButtonStyle(processButtons, index);
+					SetVideoVisibility(myVids, index);
+
+				})				
+			})(i);
+		}
+
+		//Set initial selection
+		SetButtonStyle(frameButtons, 0);
+		SetButtonStyle(processButtons, 0);
+		SetVideoVisibility(myVids, 0);
+		
+	</script>
+</html>
